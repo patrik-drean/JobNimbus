@@ -20,7 +20,8 @@ public class BracketsTests
     [InlineData("abc...xyz", true)]
     [InlineData("}{", false)]
     [InlineData("{{}", false)]
-    [InlineData("{}{{", false)]        
+    [InlineData("{}}", false)]
+    [InlineData("{}{{", false)]    
     public void Should_test_brackets(string input, bool expected)
     {
         var result = Sut.IsBracketsMatch(input);
