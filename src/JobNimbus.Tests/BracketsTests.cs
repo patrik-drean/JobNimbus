@@ -12,17 +12,34 @@ public class BracketsTests
     public Brackets Sut { get; }
 
     [Theory]
-    [InlineData("{}", true)]
-    [InlineData("{}{}", true)]
-    [InlineData("{{},{}}", true)]
-    [InlineData("{abc...xyz}", true)]
+    [InlineData("{}", true)]    
     [InlineData("", true)]
-    [InlineData("abc...xyz", true)]
+    [InlineData("{abc...xyz}", true)]
     [InlineData("}{", false)]
     [InlineData("{{}", false)]
+    public void Should_match_brackets(string input, bool expected)
+    {
+        var result = Sut.IsBracketsMatch(input);
+
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("[]", true)]
+    [InlineData("()", true)]
+    [InlineData("{[()]}", true)]
+    [InlineData("{{[()]}, {[()]}}", true)]    
+    [InlineData("{}{}", true)]
+    [InlineData("{{},(),[]}", true)]
+    [InlineData("[[]", false)]
+    [InlineData("(()", false)]
     [InlineData("{}}", false)]
-    [InlineData("{}{{", false)]    
-    public void Should_test_brackets(string input, bool expected)
+    [InlineData("())", false)]
+    [InlineData("[]]", false)]
+    [InlineData("{[()(]}", false)]
+    [InlineData("{[[()]}", false)]
+    [InlineData("{[()]}}", false)]
+    public void Should_match_all_brackets(string input, bool expected)
     {
         var result = Sut.IsBracketsMatch(input);
 
